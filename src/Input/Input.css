@@ -1,0 +1,13 @@
+.button {
+    cursor: pointer;
+}
+
+.center-table > thead > tr > th,.center-table tbody th, .center-table tbody  td, .center-table tr {
+    text-align: center;
+    vertical-align: middle;
+}
+
+
+#inputContainer {
+    margin-top: 2rem;
+}

@@ -1,0 +1,27 @@
+
+/*
+.svg-container {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%;
+    vertical-align: top;
+    overflow: hidden;
+}
+.svg-content {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+*/
+
+.d3-tip {
+    padding: 10px;
+    color: white;
+    background-color: rgba(0,0,0,0.75);
+}
+
+#aproxChartContainer {
+    margin-top: 2rem;
+}
