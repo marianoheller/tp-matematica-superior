@@ -5,6 +5,15 @@ const rectaConfig = config.methods.find( (m) => m.name === "Recta" );
 if ( !rectaConfig ) throw new Error("No se pudo encontrar el metodo 'Recta' en la configuracion");
 
 
+
+
+test('calcVals worng input', function() {
+	expect( () => calcVals("asdasd", rectaConfig) ).toThrow();
+	expect( () => calcVals({}, rectaConfig) ).toThrow();
+	expect( () => calcVals([{ x: 1, y: "asd"}], rectaConfig) ).toThrow();
+	expect( () => calcVals([{ x: 1, y: "2"}], rectaConfig) ).toThrow();
+});
+
 test('calcVals with test case', function() {
   	const input = [
 		{x: 1, y: 5},

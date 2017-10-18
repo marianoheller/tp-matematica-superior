@@ -27,7 +27,7 @@ puntos de la forma (xn, f(xn)). Así mismo desplegará al usuario un conjunto de
 El procesador de datos contendrá la lógica para poder interpretar cada una de las funcionalidades
 que brinda la interfaz de usuario.
 
-###### 1. Ingresar Datos
+##### 1. Ingresar Datos
 En primera instancia, solicitará al usuario que ingrese una serie de puntos, junto a
 la cantidad de decimales con los que trabajará. De esta forma disponibilizará un conjuntos
 de funcionalidades para obtener el función aproximante que minimice el error.
@@ -46,7 +46,7 @@ Luego de elegir el tipo de aproximación que se desea, el usuario podrá selecci
 el sistema utilizado para resolver.
 * Visualizar la distribución de puntos junto a la gráfica de la función encontrada en un mismo sistema de referencia.
 
-###### 2. Comparar Aproximaciones
+##### 2. Comparar Aproximaciones
 La opción de Comparar Aproximaciones, otorgará al usuario una tabla que logra
 diferenciar los distintos modelos (uno o más), mostrando el error asumido sobre cada
 uno de ellos. 
@@ -59,6 +59,75 @@ La tabla contendrá la siguiente información:
 |  n | Xn |Yn | 
 
 De manera adicional, mostrará por pantalla cual es el que mejor se aproxima a la función que dio origen a ese conjunto de datos.
-###### 3. Finalizar
+##### 3. Finalizar
 Con la opción finalizar, el usuario podrá terminar con todas las operaciones que estaba
 realizando y así dar origen a un nuevo set de datos o incluso salir del programa.
+
+## Desarrollo
+
+Para agregar un nuevo metodo se debe agregar el metodo a la configuracion.
+```javascript
+{
+    decimals: [ "0", "1", "2", "3", "4", "5" ],
+    methods: [
+        {
+            name: "MI_METODO",
+            enabled: false,
+            formulaToShow: "A*x^2+B+x",
+            vals: [
+                {
+                    name: "X",
+                    expr: "x",
+                },
+                {
+                    name: "Y",
+                    expr: "y",
+                },
+                {
+                    name: "X^2",
+                    expr: "x*x",
+                },
+                {
+                    name: "XY",
+                    expr: "x*y",
+                },
+            ],
+            getFormula: ( { a, b }) => {
+                return (x) => {
+                    return a*Math.pow(x)+b+x;
+                }
+            },
+        },
+    ]
+}
+```
+A su vez se debera crear la funcion resolvente. Esta toma como inputs un array como este:
+```javascript
+const input = [
+    {x: 1, y: 5},
+    {x: 2, y: 6},
+    {x: 3, y: 9},
+    {x: 4, y: 8},
+    {x: 6, y: 10},
+];
+```
+Y tiene como output un objecto como este: 
+```javascript
+const output = {
+    //El formato de vals se puede 'clonar' de la configuracion y agregandole el valor (value) calculado
+    vals: [
+        [ { name: String, expr: String, value: Number}, {}, {}],
+        ...,
+    ],
+    //Params es un object que contiene los parametros necesarios para la recta
+    params: {},
+    //Y errors es un Array de longitud igual a la de input pero conteniendo un object con el error lineal y cuadratico de cada par x,y
+    errors: [ 
+        { lineal: Number, cuadratico: Number },
+        ...,
+    ]
+};
+```
+Como comentario, esta bueno dividir la function resolvente en pequeños modulos que calculen cada parametro del objeto output para facilitar el testeo. Por ej, una funcion que calcula los vals, otra que calcula los params y otra q calcula los errors.   
+
+Una vez todo testeado, se importa el resolvente al engine.js y se lo agrega al Array de solvers. Por ultimo se configura el metodo como 'enabled' en el archivo config.js para habilitar su uso a travez de la interfaz grafica.

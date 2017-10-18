@@ -4,7 +4,6 @@ export default function aproxRecta(inputs, config) {
 	const vals = calcVals(inputs, config);
 	const params = solveEquation(vals);
 	const errors = calcError(inputs, params, config);
-	console.log(errors);
 	return {
 		vals,
 		params,
@@ -16,6 +15,7 @@ export default function aproxRecta(inputs, config) {
 
 export function calcVals(inputs, config) {
 	if ( typeof(inputs) !== "object") throw new Error("Worng input type");
+	if ( inputs.some( (row) => typeof(row.x)!=="number" || typeof(row.y)!=="number" )) throw new Error("Wrong field type");
 	return inputs.map( (input) => {
 		return config.vals.map( (valConfig) => {
 			return {
