@@ -46,11 +46,11 @@ export function solveEquation(vals) {
 		sumAllFields(vals, "Y")
 	];
 
-	var x = math.lusolve(M, b);
+	const x = math.lusolve(M, b);
 
 	return {
-		a: parseFloat(x[0][0].toFixed(4)),
-		b: parseFloat(x[1][0].toFixed(4)),
+		a: parseFloat(x[0][0].toFixed(5)),
+		b: parseFloat(x[1][0].toFixed(5)),
 	}
 }
 
@@ -59,8 +59,8 @@ export function calcError(inputs, params, config) {
 
 	return inputs.map( (input) => {
 		return {
-			lineal: aprox(input.x) - input.y,
-			cuadratico: math.pow(aprox(input.x) - input.y, 2),
+			lineal: parseFloat((aprox(input.x) - input.y).toFixed(5)),
+			cuadratico: parseFloat(math.pow(aprox(input.x) - input.y, 2).toFixed(5)),
 		}
 	} );
 }	
