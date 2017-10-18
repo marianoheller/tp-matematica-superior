@@ -101,7 +101,7 @@ Para agregar un nuevo metodo se debe agregar el metodo a la configuracion.
     ]
 }
 ```
-A su vez se debera crear la funcion resolvente. Esta toma como inputs un array como este:
+A su vez se debera crear la funcion resolvente en la carpeta Engine. Esta toma como inputs un array como este:
 ```javascript
 const input = [
     {x: 1, y: 5},
@@ -130,4 +130,4 @@ const output = {
 ```
 Como comentario, esta bueno dividir la function resolvente en pequeños modulos que calculen cada parametro del objeto output para facilitar el testeo. Por ej, una funcion que calcula los vals, otra que calcula los params y otra q calcula los errors.   
 
-Una vez todo testeado, se importa el resolvente al engine.js y se lo agrega al Array de solvers. Por ultimo se configura el metodo como 'enabled' en el archivo config.js para habilitar su uso a travez de la interfaz grafica.
+Una vez todo testeado, se importa el resolvente al Engine/engine.js y se lo agrega al Array de solvers. Por ultimo se configura el metodo como 'enabled' en el archivo config.js para habilitar su uso a travez de la interfaz grafica.
