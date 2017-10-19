@@ -9,21 +9,28 @@ export default  {
             vals: [
                 {
                     name: "X",
-                    expr: "x",
+                    calc: ( {x, y} ) => x,
                 },
                 {
                     name: "Y",
-                    expr: "y",
+                    calc: ( {x, y} ) => y,
                 },
                 {
                     name: "X^2",
-                    expr: "x*x",
+                    calc: ( {x, y} ) => Math.pow(x,2),
                 },
                 {
                     name: "XY",
-                    expr: "x*y",
+                    calc: ( {x, y} ) => x*y,
                 },
             ],
+            matrix: {
+                M: [ ["X^2", "X"], ["X", "I"] ],
+                b: [ "XY", "Y"]
+            },
+            transformParams: ( {a, b} ) => {
+                return { a, b }
+            },
             getFormula: ( { a, b }) => {
                 return (x) => {
                     return a*x+b;
@@ -31,9 +38,19 @@ export default  {
             },
         },
         {
+            name: "Parabola",
+            enabled: false,
+            formulaToShow: "a*x^2 + b*x + c",
+            getFormula: ( { a, b, c }) => {
+                return (x) => {
+                    return a*Math.pow(x,2) + b*x + c;
+                }
+            },
+        },
+        {
             name: "Exponencial",
             enabled: false,
-            formulaToShow: "B*e^(A*x)",
+            formulaToShow: "b*e^(a*x)",
             getFormula: ( { a, b }) => {
                 return (x) => {
                     return b*Math.exp(a*x);
@@ -57,16 +74,6 @@ export default  {
             getFormula: ( { a, b }) => {
                 return (x) => {
                     return a/(x+b);
-                }
-            },
-        },
-        {
-            name: "Parabola",
-            enabled: false,
-            formulaToShow: "A*x^2 + B*x + C",
-            getFormula: ( { a, b, c }) => {
-                return (x) => {
-                    return a*Math.pow(x,2) + b*x + c;
                 }
             },
         },

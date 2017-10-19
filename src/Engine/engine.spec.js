@@ -1,4 +1,4 @@
-import { calcVals, solveEquation, calcError } from './Recta'
+import { calcVals, solveEquation, calcError } from './engine'
 import config from '../config';
 
 const rectaConfig = config.methods.find( (m) => m.name === "Recta" );
@@ -14,7 +14,7 @@ test('calcVals worng input', function() {
 	expect( () => calcVals([{ x: 1, y: "2"}], rectaConfig) ).toThrow();
 });
 
-test('calcVals with test case', function() {
+test('calcVals with known input', function() {
   	const input = [
 		{x: 1, y: 5},
 		{x: 2, y: 6},
@@ -24,31 +24,31 @@ test('calcVals with test case', function() {
 	];
 	const expected = [ 
 		[ 
-			{ name: 'X', expr: 'x', value: 1 },
-			{ name: 'Y', expr: 'y', value: 5 },
-			{ name: 'X^2', expr: 'x*x', value: 1 },
-			{ name: 'XY', expr: 'x*y', value: 5 } 
+			{ name: 'X', value: 1 },
+			{ name: 'Y', value: 5 },
+			{ name: 'X^2', value: 1 },
+			{ name: 'XY', value: 5 } 
 		],
 		[ 
-			{ name: 'X', expr: 'x', value: 2 },
-			{ name: 'Y', expr: 'y', value: 6 },
-			{ name: 'X^2', expr: 'x*x', value: 4 },
-			{ name: 'XY', expr: 'x*y', value: 12 } ],
+			{ name: 'X', value: 2 },
+			{ name: 'Y', value: 6 },
+			{ name: 'X^2', value: 4 },
+			{ name: 'XY', value: 12 } ],
 		[ 
-			{ name: 'X', expr: 'x', value: 3 },
-			{ name: 'Y', expr: 'y', value: 9 },
-			{ name: 'X^2', expr: 'x*x', value: 9 },
-			{ name: 'XY', expr: 'x*y', value: 27 } ],
+			{ name: 'X', value: 3 },
+			{ name: 'Y', value: 9 },
+			{ name: 'X^2', value: 9 },
+			{ name: 'XY', value: 27 } ],
 		[ 
-			{ name: 'X', expr: 'x', value: 4 },
-			{ name: 'Y', expr: 'y', value: 8 },
-			{ name: 'X^2', expr: 'x*x', value: 16 },
-			{ name: 'XY', expr: 'x*y', value: 32 } ],
+			{ name: 'X', value: 4 },
+			{ name: 'Y', value: 8 },
+			{ name: 'X^2', value: 16 },
+			{ name: 'XY', value: 32 } ],
 		[ 
-			{ name: 'X', expr: 'x', value: 6 },
-			{ name: 'Y', expr: 'y', value: 10 },
-			{ name: 'X^2', expr: 'x*x', value: 36 },
-			{ name: 'XY', expr: 'x*y', value: 60 } 
+			{ name: 'X', value: 6 },
+			{ name: 'Y', value: 10 },
+			{ name: 'X^2', value: 36 },
+			{ name: 'XY', value: 60 } 
 		] 
 	];
 	const output = calcVals(input, rectaConfig);
@@ -60,7 +60,7 @@ test('calcVals with test case', function() {
 });
 
 
-test('calcVals with unkown test case. Checking types', function() {
+test('calcVals with unkown input. Checking types', function() {
   	const input = [
 		{x: 1.12312321, y: 5},
 		{x: 13, y: -6.123},
@@ -73,7 +73,6 @@ test('calcVals with unkown test case. Checking types', function() {
 		row.forEach( (e, eIndex) => {
 			expect(e).toMatchObject({
 				name: expect.any(String),
-				expr: expect.any(String),
 				value: expect.any(Number),
 			})
 		});
@@ -83,7 +82,7 @@ test('calcVals with unkown test case. Checking types', function() {
 
 
 
-test('solveEquation test case', function() {
+test('solveEquation known input', function() {
 	const vals = [ 
 		[ 
 			{ name: 'X', expr: 'x', value: 1 },
@@ -113,12 +112,12 @@ test('solveEquation test case', function() {
 			{ name: 'XY', expr: 'x*y', value: 60 } 
 		] 
 	];
-	const eqSolvs = solveEquation(vals);
+	const eqSolvs = solveEquation(vals, rectaConfig);
 	expect(eqSolvs.a).toBe(0.97297);
 	expect(eqSolvs.b).toBe(4.48649);
 })
 
-test('solveEquation unknown test case. Checking types', function() {
+test('solveEquation with unkown input. Checking types', function() {
 	const vals = [ 
 		[ 
 			{ name: 'X', expr: 'x', value: 41 },
@@ -148,7 +147,7 @@ test('solveEquation unknown test case. Checking types', function() {
 			{ name: 'XY', expr: 'x*y', value: -60 } 
 		] 
 	];
-	const eqSolvs = solveEquation(vals);
+	const eqSolvs = solveEquation(vals, rectaConfig);
 	expect(eqSolvs).toMatchObject({
 		a: expect.any(Number),
 		b: expect.any(Number),
@@ -185,12 +184,12 @@ test('errors calc with known params', function() {
 
 
 
-test('errors calc with known params', function() {
+test('errors calc with unknown params', function() {
 	const input = [
-		{x: 1, y: 5},
+		{x: 1, y: 5.32},
 		{x: 2, y: 6},
-		{x: 3, y: 9},
-		{x: 4, y: 8},
+		{x: 3, y: -1.29},
+		{x: 4, y: 82},
 		{x: 6, y: 10},
 	];
 	const eqSolvs = {
