@@ -110,6 +110,7 @@ class AproxChart extends Component {
             .append("path")
             .attr("class", "line")
             .attr("stroke", "hsl(204, 86%, 53%)")
+            .attr("fill", "none")
             .attr("d", valueline(dataPoints));
         }
 

@@ -28,8 +28,11 @@ export default  {
                 M: [ ["X^2", "X"], ["X", "I"] ],
                 b: [ "XY", "Y"]
             },
-            transformParams: ( {a, b} ) => {
-                return { a, b }
+            transformParams: ( paramsArr ) => {
+                return { 
+                    a: paramsArr[0],
+                    b: paramsArr[1]
+                }
             },
             getFormula: ( { a, b }) => {
                 return (x) => {
@@ -68,15 +71,19 @@ export default  {
                 },
                 {
                     name: "YX^2",
-                    calc: ( {x, y} ) => x*Math.pow(y,2),
+                    calc: ( {x, y} ) => y*Math.pow(x,2),
                 },
             ],
             matrix: {
                 M: [ ["X^4", "X^3", "X^2"], ["X^3", "X^2", "X"], ["X^2", "X", "I"] ],
-                b: [ "XY^2", "XY", "Y"]
+                b: [ "YX^2", "XY", "Y"]
             },
-            transformParams: ({a,b,c}) => {
-                return { a, b, c }
+            transformParams: ( paramsArr ) => {
+                return { 
+                    a: paramsArr[0],
+                    b: paramsArr[1],
+                    c: paramsArr[2]
+                }
             },
             getFormula: ( { a, b, c }) => {
                 return (x) => {

@@ -1,4 +1,4 @@
-const math = require('mathjs');
+import math from 'mathjs';
 import config from '../config';
 
 
@@ -48,16 +48,12 @@ export function solveEquation(vals, config) {
 
 	const x = math.lusolve(M, b);
 
-	//ACA HAY QUE RESOLVER EL TEMA DE LA PARABOLA CON 3 PARAMETROS
-	const params = config.transformParams({
-		a: x[0][0],
-		b: x[1][0],
-	});
+	const params = config.transformParams(x.map((v) => v[0]));
 
-	return {
-		a: parseFloat(params.a.toFixed(5)),
-		b: parseFloat(params.b.toFixed(5)),
-	}
+	return Object.keys(params).reduce( (acc,key) => {
+		acc[key] = parseFloat(params[key].toFixed(5))
+		return acc;
+	}, {});
 }
 
 export function calcError(inputs, params, config) {
