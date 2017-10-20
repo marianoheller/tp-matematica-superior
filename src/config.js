@@ -39,8 +39,45 @@ export default  {
         },
         {
             name: "Parabola",
-            enabled: false,
+            enabled: true,
             formulaToShow: "a*x^2 + b*x + c",
+            vals: [
+                {
+                    name: "X",
+                    calc: ( {x, y} ) => x,
+                },
+                {
+                    name: "Y",
+                    calc: ( {x, y} ) => y,
+                },
+                {
+                    name: "X^2",
+                    calc: ( {x, y} ) => Math.pow(x,2),
+                },
+                {
+                    name: "X^3",
+                    calc: ( {x, y} ) => Math.pow(x,3),
+                },
+                {
+                    name: "X^4",
+                    calc: ( {x, y} ) => Math.pow(x,4),
+                },
+                {
+                    name: "XY",
+                    calc: ( {x, y} ) => x*y,
+                },
+                {
+                    name: "YX^2",
+                    calc: ( {x, y} ) => x*Math.pow(y,2),
+                },
+            ],
+            matrix: {
+                M: [ ["X^4", "X^3", "X^2"], ["X^3", "X^2", "X"], ["X^2", "X", "I"] ],
+                b: [ "XY^2", "XY", "Y"]
+            },
+            transformParams: ({a,b,c}) => {
+                return { a, b, c }
+            },
             getFormula: ( { a, b, c }) => {
                 return (x) => {
                     return a*Math.pow(x,2) + b*x + c;

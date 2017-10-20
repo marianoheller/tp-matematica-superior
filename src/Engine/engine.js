@@ -48,9 +48,15 @@ export function solveEquation(vals, config) {
 
 	const x = math.lusolve(M, b);
 
+	//ACA HAY QUE RESOLVER EL TEMA DE LA PARABOLA CON 3 PARAMETROS
+	const params = config.transformParams({
+		a: x[0][0],
+		b: x[1][0],
+	});
+
 	return {
-		a: parseFloat(x[0][0].toFixed(5)),
-		b: parseFloat(x[1][0].toFixed(5)),
+		a: parseFloat(params.a.toFixed(5)),
+		b: parseFloat(params.b.toFixed(5)),
 	}
 }
 
