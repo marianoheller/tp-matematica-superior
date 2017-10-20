@@ -98,8 +98,12 @@ El objecto de configuracion posee un array de metodos, en él se deberá agregar
         b: [ "XY", "Y"]
     },
     //Esta funcion se ejecuta luego de resolver la matriz para transformar los valor A,B vistos en clase (linealizados) a los valores a,b de el metodo aproximante original
-    transformParams: ( {a, b} ) => {
-        return { a, b }
+    transformParams: ( paramsArr ) => {
+        return { 
+            a: paramsArr[0],
+            b: paramsArr[1],
+            c: paramsArr[2]
+        }
     },
     //Esta formula es la utilizada para calcular la funcion aproximante (para graficar y para el error)
     getFormula: ( { a, b }) => {
