@@ -9,21 +9,31 @@ export default  {
             vals: [
                 {
                     name: "X",
-                    expr: "x",
+                    calc: ( {x, y} ) => x,
                 },
                 {
                     name: "Y",
-                    expr: "y",
+                    calc: ( {x, y} ) => y,
                 },
                 {
                     name: "X^2",
-                    expr: "x*x",
+                    calc: ( {x, y} ) => Math.pow(x,2),
                 },
                 {
                     name: "XY",
-                    expr: "x*y",
+                    calc: ( {x, y} ) => x*y,
                 },
             ],
+            matrix: {
+                M: [ ["X^2", "X"], ["X", "I"] ],
+                b: [ "XY", "Y"]
+            },
+            transformParams: ( paramsArr ) => {
+                return { 
+                    a: paramsArr[0],
+                    b: paramsArr[1]
+                }
+            },
             getFormula: ( { a, b }) => {
                 return (x) => {
                     return a*x+b;
@@ -31,9 +41,60 @@ export default  {
             },
         },
         {
+            name: "Parabola",
+            enabled: true,
+            formulaToShow: "a*x^2 + b*x + c",
+            vals: [
+                {
+                    name: "X",
+                    calc: ( {x, y} ) => x,
+                },
+                {
+                    name: "Y",
+                    calc: ( {x, y} ) => y,
+                },
+                {
+                    name: "X^2",
+                    calc: ( {x, y} ) => Math.pow(x,2),
+                },
+                {
+                    name: "X^3",
+                    calc: ( {x, y} ) => Math.pow(x,3),
+                },
+                {
+                    name: "X^4",
+                    calc: ( {x, y} ) => Math.pow(x,4),
+                },
+                {
+                    name: "XY",
+                    calc: ( {x, y} ) => x*y,
+                },
+                {
+                    name: "YX^2",
+                    calc: ( {x, y} ) => y*Math.pow(x,2),
+                },
+            ],
+            matrix: {
+                M: [ ["X^4", "X^3", "X^2"], ["X^3", "X^2", "X"], ["X^2", "X", "I"] ],
+                b: [ "YX^2", "XY", "Y"]
+            },
+            transformParams: ( paramsArr ) => {
+                return { 
+                    a: paramsArr[0],
+                    b: paramsArr[1],
+                    c: paramsArr[2]
+                }
+            },
+            getFormula: ( { a, b, c }) => {
+                return (x) => {
+                    return a*Math.pow(x,2) + b*x + c;
+                }
+            },
+        },
+        {
             name: "Exponencial",
             enabled: false,
-            formulaToShow: "B*e^(A*x)",
+            formulaToShow: "b*e^(a*x)",
             getFormula: ( { a, b }) => {
                 return (x) => {
                     return b*Math.exp(a*x);
@@ -57,16 +118,6 @@ export default  {
             getFormula: ( { a, b }) => {
                 return (x) => {
                     return a/(x+b);
-                }
-            },
-        },
-        {
-            name: "Parabola",
-            enabled: false,
-            formulaToShow: "A*x^2 + B*x + C",
-            getFormula: ( { a, b, c }) => {
-                return (x) => {
-                    return a*Math.pow(x,2) + b*x + c;
                 }
             },
         },

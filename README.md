@@ -65,43 +65,51 @@ realizando y así dar origen a un nuevo set de datos o incluso salir del program
 
 ## Desarrollo
 
-Para agregar un nuevo metodo se debe agregar el metodo a la configuracion.
+El sistema cuenta con una funcion que se encarga de resolver cualquier metodo *bien* configurado.
+Por lo que para agregar un metodo solo hace actualizar el archivo de configuracion con el metodo deseado e implementar los testeos correspondients.
+El objecto de configuracion posee un array de metodos, en él se deberá agregar el nuevo metodo. El metodo posee una estructura como la siguiente:
 ```javascript
 {
-    decimals: [ "0", "1", "2", "3", "4", "5" ],
-    methods: [
+    name: "MI_METODO",
+    enabled: true,
+    formulaToShow: "A*asdasd*x*x+B",
+    //Cada elemento de vals indica una 'columna' en la tabla de calculo vista en clase
+    vals: [
         {
-            name: "MI_METODO",
-            enabled: false,
-            formulaToShow: "A*x^2+B+x",
-            vals: [
-                {
-                    name: "X",
-                    expr: "x",
-                },
-                {
-                    name: "Y",
-                    expr: "y",
-                },
-                {
-                    name: "X^2",
-                    expr: "x*x",
-                },
-                {
-                    name: "XY",
-                    expr: "x*y",
-                },
-            ],
-            getFormula: ( { a, b }) => {
-                return (x) => {
-                    return a*Math.pow(x)+b+x;
-                }
-            },
+            name: "X",
+            calc: ( {x, y} ) => x,
         },
-    ]
-}
+        {
+            name: "Y",
+            calc: ( {x, y} ) => y,
+        },
+        {
+            name: "X^2",
+            calc: ( {x, y} ) => Math.pow(x,2),
+        },
+        {
+            name: "XY",
+            calc: ( {x, y} ) => x*y,
+        },
+    ],
+    //Es importante que los valores de la matriz matcheen con los vals.name
+    matrix: {
+        M: [ ["X^2", "X"], ["X", "I"] ],
+        b: [ "XY", "Y"]
+    },
+    //Esta funcion se ejecuta luego de resolver la matriz para transformar los valor A,B vistos en clase (linealizados) a los valores a,b de el metodo aproximante original
+    transformParams: ( {a, b} ) => {
+        return { a, b }
+    },
+    //Esta formula es la utilizada para calcular la funcion aproximante (para graficar y para el error)
+    getFormula: ( { a, b }) => {
+        return (x) => {
+            return a*x+b;
+        }
+    },
+},
 ```
-A su vez se debera crear la funcion resolvente en la carpeta Engine. Esta toma como inputs un array como este:
+La function resolvente toma como input un array como este:
 ```javascript
 const input = [
     {x: 1, y: 5},
@@ -128,6 +136,3 @@ const output = {
     ]
 };
 ```
-Como comentario, esta bueno dividir la function resolvente en pequeños modulos que calculen cada parametro del objeto output para facilitar el testeo. Por ej, una funcion que calcula los vals, otra que calcula los params y otra q calcula los errors.   
-
-Una vez todo testeado, se importa el resolvente al Engine/engine.js y se lo agrega al Array de solvers. Por ultimo se configura el metodo como 'enabled' en el archivo config.js para habilitar su uso a travez de la interfaz grafica.
