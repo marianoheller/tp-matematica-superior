@@ -2,3 +2,10 @@
     margin-top: 1rem;
     margin-bottom: 2rem;
 }
+
+
+
+.tablaContainer {
+    display: block;
+    overflow: auto;
+}

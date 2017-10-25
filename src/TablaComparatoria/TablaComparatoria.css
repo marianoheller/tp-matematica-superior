@@ -1,3 +1,7 @@
 #tablaComparatoriaContainer{
     margin-top: 2rem;
 }
+
+#tablaComparatoria {
+    overflow-x: scroll;
+}

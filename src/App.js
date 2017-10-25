@@ -141,6 +141,18 @@ class App extends Component {
 		});
 	}
 
+	calculateAllMethods() {
+		const methods = config.methods.filter((m) => m.enabled).map( (m,i) => m.name );
+		const { input, decimals } = this.state;
+		return methods.map( (method) => {
+			const resultados = Aproximador( this.parseInput(input, decimals)  , method);
+			return {
+				method: method,
+				resultados: resultados
+			}
+		} )
+	}
+
 	render() {
 		const { input, decimals, method, params, vals } = this.state;
 		return (
@@ -166,7 +178,7 @@ class App extends Component {
 							<TablaSumatoria params={params} vals={vals} decimals={decimals}/>
 						</div>
 						<div>
-							<TablaComparatoria inputs={this.parseInput(input, decimals)} decimals={decimals}/>
+							<TablaComparatoria inputs={this.parseInput(input, decimals)} getAllResults={this.calculateAllMethods.bind(this)}/>
 						</div>
 					</div>
 				</div>

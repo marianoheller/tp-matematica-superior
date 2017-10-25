@@ -80,7 +80,7 @@ class AproxChart extends Component {
         .attr('class', 'circle-datapoint')
         .attr("cx", (d) => xScale(d.x) )
         .attr("cy", (d) => yScale(d.y) )
-        .attr("r", 4 )
+        .attr("r", 5 )
         .attr("fill", "hsl(141, 71%, 48%)")
         .on("mouseover", tip.show)
         .on("mouseout", tip.hide);
