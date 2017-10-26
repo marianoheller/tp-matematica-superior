@@ -3,5 +3,8 @@
 }
 
 #tablaComparatoria {
-    overflow-x: scroll;
+    margin: auto;
+    border-collapse: collapse;
+    overflow-x: auto;
+    max-width: 100%;
 }

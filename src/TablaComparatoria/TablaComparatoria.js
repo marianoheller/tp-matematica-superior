@@ -22,6 +22,10 @@ export default class TablaComparatoria extends Component {
 
     render() {
         const { inputs, decimals } = this.props;
+
+        const { input } = this.props;
+        if ( !inputs.length ) return <div></div>
+
         return (
         <div>
             <div className="columns" id="tablaComparatoriaContainer">

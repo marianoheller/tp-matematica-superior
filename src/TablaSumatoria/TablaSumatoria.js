@@ -9,6 +9,9 @@ export default class TablaSumatoria extends Component {
         return (
             <div className="columns" id="tablaSumatoriaGlobalContainer">
                 <div className="column">
+                    <div>
+                        {}
+                    </div>
                     <div className="title is-4">Detalles de cálculo</div>
                     <div className="tablaContainer">
                         <table id="tablaSumatoria" className="table is-fullwidth is-striped is-narrow center-table is-bordered" >

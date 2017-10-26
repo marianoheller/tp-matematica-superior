@@ -9,3 +9,12 @@
     display: block;
     overflow: auto;
 }
+
+#formulaContainer {
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+#formula {
+    font-weight: bold;
+}

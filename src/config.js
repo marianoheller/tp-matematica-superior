@@ -5,7 +5,7 @@ export default  {
         {
             name: "Recta",
             enabled: true,
-            formulaToShow: "A*x+B",
+            formulaToShow: "a*x+b",
             vals: [
                 {
                     name: "X",
