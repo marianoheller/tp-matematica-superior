@@ -9,21 +9,35 @@ export default class TablaComparatoria extends Component {
         super(props);
 
         this.state = {
-            allResults: [],
+            dataTabla: [],
         }
     }
 
+
+    /**
+     * Necesito array con valor de aprox por el metodo + error
+     */
     handleClickCalcular() {
-        const { getAllResults } = this.props;
+        const { getAllResults, inputs } = this.props;
         const allResults = getAllResults();
+        const aproximantes = allResults.map( (objRes) => {
+            return config.methods.find( (m) => m.name===objRes.method ).getFormula({ ...objRes.results.params});
+        } );
+        const dataTabla = inputs.map( (input, inputIndex) => {
+            const aproxRow = aproximantes.map( (aprox) => aprox(input.x) );
+            const errorRow = allResults.map( (objRes) => {
+                return objRes.results.errors[inputIndex].cuadratico;
+            })
+            return [inputIndex, input.x, input.y, ...aproxRow, ...errorRow];
+        });
         this.setState({
-            allResults: allResults,
+            dataTabla: dataTabla,
         })
     }
 
     render() {
         const { inputs, decimals } = this.props;
-        const { allResults } = this.state;
+        const { dataTabla } = this.state;
         return (
         <div>
             <div className="columns" id="tablaComparatoriaContainer">
@@ -50,7 +64,7 @@ export default class TablaComparatoria extends Component {
             </div>
                     
             <div className="tablaContainer">
-                <table className="tablaComparatoria" className="table is-fullwidth is-striped is-narrow center-table is-bordered" >
+                <table id="tablaComparatoria" className="table is-fullwidth is-striped is-narrow center-table is-bordered" >
                     <thead>
                         <tr>
                             <th colSpan={3}>Datos</th>
@@ -73,14 +87,12 @@ export default class TablaComparatoria extends Component {
                     </thead>
                     <tbody>
                         {/* Seccion datos */}
-                        {inputs.map( (input,i) => {
-                            const result = allResults[i];
+                        {dataTabla.map( (rowData,i) => {
                             return (       
                                 <tr key={`rowSumatoria${i}`} >
-                                    <td>{i}</td>
-                                    <td>{input.x}</td>
-                                    <td>{input.y}</td>
-                                    <td>{}</td>
+                                    { rowData.map( (cellData, ci) => 
+                                        <td key={`cellData${ci}`}>{parseFloat(cellData.toFixed(decimals))}</td> 
+                                    )}
                                 </tr>
                             )
                         })}

@@ -145,10 +145,10 @@ class App extends Component {
 		const methods = config.methods.filter((m) => m.enabled).map( (m,i) => m.name );
 		const { input, decimals } = this.state;
 		return methods.map( (method) => {
-			const resultados = Aproximador( this.parseInput(input, decimals)  , method);
+			const results = Aproximador( this.parseInput(input, decimals)  , method);
 			return {
 				method: method,
-				resultados: resultados
+				results: results
 			}
 		} )
 	}
@@ -178,7 +178,7 @@ class App extends Component {
 							<TablaSumatoria params={params} vals={vals} decimals={decimals}/>
 						</div>
 						<div>
-							<TablaComparatoria inputs={this.parseInput(input, decimals)} getAllResults={this.calculateAllMethods.bind(this)}/>
+							<TablaComparatoria decimals={decimals} inputs={this.parseInput(input, decimals)} getAllResults={this.calculateAllMethods.bind(this)}/>
 						</div>
 					</div>
 				</div>
