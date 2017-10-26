@@ -124,44 +124,46 @@ class InputTable extends Component {
                         
                     </div>
                 </div>
-                <table className="table is-fullwidth is-striped is-narrow center-table is-bordered" >
-                    <thead>
-                        <tr>
-                            <th>Num</th>
-                            <th>X</th>
-                            <th>Y</th>
-                            <th>Del</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {input.map( (d, i) => {
-                            return (
-                                <tr key={`input${i}`}>
-                                    <th>{i}</th>
-                                    <td 
-                                    contentEditable="true" 
-                                    suppressContentEditableWarning={true}
-                                    onInput={this.handleEdit(i, "x")}
-                                    >
-                                    {d.x}
-                                    </td>
-                                    <td 
-                                    contentEditable="true" 
-                                    suppressContentEditableWarning={true}
-                                    onInput={this.handleEdit(i, "y")}
-                                    >
-                                    {d.y}
-                                    </td>
-                                    <td>
-                                        <button className="deleteRowButton button is-danger" onClick={this.deleteRow(i)} >
-                                            X
-                                        </button>
-                                    </td>
-                                </tr>
-                            )
-                        })}
-                    </tbody>
-                </table>
+                <div className="tablaContainer">
+                    <table className="table is-fullwidth is-striped is-narrow center-table is-bordered" >
+                        <thead>
+                            <tr>
+                                <th>Num</th>
+                                <th>X</th>
+                                <th>Y</th>
+                                <th>Del</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {input.map( (d, i) => {
+                                return (
+                                    <tr key={`input${i}`}>
+                                        <th>{i}</th>
+                                        <td 
+                                        contentEditable="true" 
+                                        suppressContentEditableWarning={true}
+                                        onInput={this.handleEdit(i, "x")}
+                                        >
+                                        {d.x}
+                                        </td>
+                                        <td 
+                                        contentEditable="true" 
+                                        suppressContentEditableWarning={true}
+                                        onInput={this.handleEdit(i, "y")}
+                                        >
+                                        {d.y}
+                                        </td>
+                                        <td>
+                                            <button className="deleteRowButton button is-danger" onClick={this.deleteRow(i)} >
+                                                X
+                                            </button>
+                                        </td>
+                                    </tr>
+                                )
+                            })}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         )
     }

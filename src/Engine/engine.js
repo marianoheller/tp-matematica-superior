@@ -46,7 +46,17 @@ export function solveEquation(vals, config) {
 	const M = config.matrix.M.map( (rowMatrix) => rowMatrix.map((e) => sumAllFields(vals, e) ));
 	const b = config.matrix.b.map( (e) => sumAllFields(vals, e) );
 
-	const x = math.lusolve(M, b);
+	try {
+		var x = math.lusolve(M, b);
+	} catch(e) {
+		//Trato de salvar las papas cuando la matriz es singular
+		const params = config.transformParams( config.matrix.b.map( () => 0) );
+		return Object.keys(params).reduce( (acc,key) => {
+			acc[key] = 0;
+			return acc;
+		}, {});
+	}
+	
 
 	const params = config.transformParams(x.map((v) => v[0]));
 

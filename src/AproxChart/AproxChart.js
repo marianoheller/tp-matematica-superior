@@ -43,6 +43,10 @@ class AproxChart extends Component {
 
     drawChart() {
         const { size, input, params, method } = this.props;
+        if( !input.length ) {
+            d3.select("#aproxChart").remove('*');
+            return;
+        }
 
         const xScale = d3.scaleLinear()
                         .domain([d3.min(input.map((d) => d.x)), d3.max(input.map((d) => d.x)) ])
@@ -80,7 +84,7 @@ class AproxChart extends Component {
         .attr('class', 'circle-datapoint')
         .attr("cx", (d) => xScale(d.x) )
         .attr("cy", (d) => yScale(d.y) )
-        .attr("r", 4 )
+        .attr("r", 5 )
         .attr("fill", "hsl(141, 71%, 48%)")
         .on("mouseover", tip.show)
         .on("mouseout", tip.hide);
@@ -127,6 +131,9 @@ class AproxChart extends Component {
     }
 
     render() {
+        const { input } = this.props;
+        if ( !input.length ) return <div></div>
+        
         return (
             <div className="columns" id="aproxChartContainer">
                 <div className="column">

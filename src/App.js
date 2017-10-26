@@ -28,7 +28,7 @@ class App extends Component {
 			params: {},
 			errors: {},
 			method: "",
-			decimals: config.decimals[1],
+			decimals: config.decimals[3],
 		}
 		this.setInput = this.setInput.bind(this);
 		this.setDecimals = this.setDecimals.bind(this);
@@ -141,6 +141,18 @@ class App extends Component {
 		});
 	}
 
+	calculateAllMethods() {
+		const methods = config.methods.filter((m) => m.enabled).map( (m,i) => m.name );
+		const { input, decimals } = this.state;
+		return methods.map( (method) => {
+			const results = Aproximador( this.parseInput(input, decimals)  , method);
+			return {
+				method: method,
+				results: results
+			}
+		} )
+	}
+
 	render() {
 		const { input, decimals, method, params, vals } = this.state;
 		return (
@@ -159,20 +171,46 @@ class App extends Component {
 							method={method}
 							/>
 						</div>
+						<div>
+							<FormulaShower method={method}  params={params} decimals={decimals} shouldShow={vals.length} />
+						</div>
 						<div >
 							<AproxChart input={this.parseInput(input, decimals)} method={method} params={params}/>
 						</div>
 						<div>
-							<TablaSumatoria params={params} vals={vals} decimals={decimals}/>
+							<TablaSumatoria params={params} vals={vals} decimals={decimals} method={method}/>
 						</div>
 						<div>
-							<TablaComparatoria inputs={this.parseInput(input, decimals)} decimals={decimals}/>
+							<TablaComparatoria decimals={decimals} inputs={this.parseInput(input, decimals)} getAllResults={this.calculateAllMethods.bind(this)}/>
 						</div>
 					</div>
 				</div>
 			</div>
 		</section>
 		);
+	}
+}
+
+
+class FormulaShower extends Component {
+	render() {
+		const { method, params, decimals, shouldShow } = this.props;
+		const methodConfig = config.methods.find( (m) => m.name===method );
+		if ( !methodConfig || !shouldShow ) return <div></div>;
+		
+		const ecuacion = Object.keys(params).reduce( (acc, key) => acc.replace( key, parseFloat(params[key].toFixed(decimals)) ) , methodConfig.formulaToShow);
+		return (
+			<div>
+				<div className="title is-4">Formula calculada</div>
+				<div className="columns" id="formulaContainer">
+					<div className="column has-text-centered">
+						<div id="formula" className="title is-6">
+							{ecuacion}
+						</div>
+					</div>
+				</div>
+			</div>
+		)
 	}
 }
 

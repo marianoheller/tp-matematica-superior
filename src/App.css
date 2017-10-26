@@ -2,3 +2,19 @@
     margin-top: 1rem;
     margin-bottom: 2rem;
 }
+
+
+
+.tablaContainer {
+    display: block;
+    overflow: auto;
+}
+
+#formulaContainer {
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+#formula {
+    font-weight: bold;
+}
