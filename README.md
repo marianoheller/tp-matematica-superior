@@ -63,6 +63,13 @@ De manera adicional, mostrará por pantalla cual es el que mejor se aproxima a l
 Con la opción finalizar, el usuario podrá terminar con todas las operaciones que estaba
 realizando y así dar origen a un nuevo set de datos o incluso salir del programa.
 
+## Deployment
+Para ejecutar la aplicación localmente, ejecutar los siguientes comandos:
+```
+npm run install
+npm run start
+```
+
 ## Desarrollo
 
 El sistema cuenta con una funcion que se encarga de resolver cualquier metodo *bien* configurado.
