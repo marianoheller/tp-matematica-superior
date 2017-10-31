@@ -49,8 +49,9 @@ export function solveEquation(vals, config) {
 	try {
 		var x = math.lusolve(M, b);
 	} catch(e) {
-		//Trato de salvar las papas cuando la matriz es singular
-		const params = config.transformParams( config.matrix.b.map( () => 0) );
+		// Acá salva las papas cuando la matriz es singular
+		// Manda todos los params a 0 y anda. Testeado en Recta y Parabola.
+		const params = config.transformParams( config.matrix.b.map( () => 1) );
 		return Object.keys(params).reduce( (acc,key) => {
 			acc[key] = 0;
 			return acc;
