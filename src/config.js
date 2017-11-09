@@ -4,7 +4,7 @@ export default  {
         {
             name: "Recta",
             enabled: true,
-            formulaToShow: "a*x+b",
+            formulaToShow: "a*x+(b)",
             vals: [
                 {
                     name: "X",
@@ -42,7 +42,7 @@ export default  {
         {
             name: "Parabola",
             enabled: true,
-            formulaToShow: "a*x^2 + b*x + c",
+            formulaToShow: "a*x^2 + b*x + (c)",
             vals: [
                 {
                     name: "X",
@@ -191,11 +191,11 @@ export default  {
                 M: [ ["X^2", "X"], ["X", "I"] ],
                 b: [ "XY", "Y"]
             },
-            formulaToShow: "a*x/(x+b)",
+            formulaToShow: "a*x/(x+(b))",
             transformParams: ( paramsArr ) => {
                 return {
-                    a: 1/paramsArr[0],
-                    b: (1/paramsArr[0])*paramsArr[1]
+                    a: (1/paramsArr[1]),
+                    b: (1/paramsArr[1])*paramsArr[0]
                 }
             },
             getFormula: ( { a, b }) => {
@@ -204,5 +204,43 @@ export default  {
                 }
             },
         },
+		        {
+            name: "Hiperbola Simple",
+            enabled: true,
+            vals: [
+                {
+                    name: "X",
+                    calc: ( {x, y} ) => x,
+                },
+                {
+                    name: "Y",
+                    calc: ( {x, y} ) => 1/y,
+                },
+                {
+                    name: "X^2",
+                    calc: ( {x, y} ) => Math.pow(x,2),
+                },
+                {
+                    name: "XY",
+                    calc: ( {x, y} ) => (x)*(1/y),
+                },
+            ],
+            matrix: {
+                M: [ ["X^2", "X"], ["X", "I"] ],
+                b: [ "XY", "Y"]
+            },
+            formulaToShow: "a/(x+(b))",
+            transformParams: ( paramsArr ) => {
+                return {
+                    a: 1/paramsArr[0],
+                    b: (1/paramsArr[0])*paramsArr[1]
+                }
+            },
+            getFormula: ( { a, b }) => {
+                return (x) => {
+                    return a/(x+b);
+                }
+            },
+        }
     ]
 }
